@@ -1,0 +1,69 @@
+<script>
+    //array 1 dimensi (array scalar)
+    let data = {'nama':'Ridwan','jabatan':'Manager','status':'Menikah',};
+    
+    //array > 1 dimensi / array of object / array associative
+    let pegawai = [data];
+
+    </script>
+    <h3 align="center">DATA PEGAWAI</h3>
+    <table align="center" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr bgcolor="#76e5b7" id="header">
+                <th>NAMA PEGAWAI</th>
+                <th>JABATAN</th>
+                <th>STATUS</th>
+                <th>GAJI POKOK</th>
+                <th>TUNJANGAN JABATAN</th>
+                <th>BPJS</th>
+                <th>TUNJANGAN KELUARGA</th>
+                <th>TOTAL GAJI</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+    
+            // Looping array of object untuk menghitung dan menampilkan data
+            for(p of pegawai)
+            {
+                // Perhitungan GAPOK
+                switch(p.jabatan){
+                    case 'Manager': gapok = 15000000; break;
+                    case 'Asisten Manager': gapok = 10000000; break;
+                    case 'Staff': gapok = 5000000; break;
+                    default: gapok = 0; break;
+                }
+                //-------------cari tunjab => 15% dari gapok-----------------
+                let tunjab = 0.15 * gapok;
+                
+                //-------------cari bpjs => 10% dari gapok-----------------
+                let bpjs = 0.1 * gapok;
+                
+                //cari tukel => 20% dari gapok untuk yg sudah menikah (gunakan ternary)
+                let tunkel = p.status === 'Menikah' ? 0.2 * gapok : 0;
+                
+                //gaji bersih = ( gapok + tunjab + tunkel ) - bpjs
+                var totalGaji = gapok + tunjab + tunkel + bpjs;
+                
+                document.write(`<tr>
+                    <td>${p.nama}</td>
+                    <td>${p.jabatan}</td>
+                    <td>${p.status}</td>
+                    <td align="center">Rp. ${gapok.toLocaleString("id-ID")}</td>
+                    <td align="center">Rp. ${tunjab.toLocaleString("id-ID")}</td>
+                    <td align="center">Rp. ${bpjs.toLocaleString("id-ID")}</td>
+                    <td align="center">Rp. ${tunkel.toLocaleString("id-ID")}</td>
+                    <td align="center">Rp. ${totalGaji.toLocaleString("id-ID")}</td>
+                </tr>`);
+            }	
+            </script>
+        </tbody>
+        <tfoot>
+            <td colspan="7" style="text-align: center;" bgcolor="#76e5b7">TOTAL GAJI KESELURUHAN</td>
+            <script>
+                document.write(`
+                <td align="center">Rp. ${totalGaji.toLocaleString("id-ID")}</td>
+                `)
+            </script>
+        </tfoot>
+    </table>
